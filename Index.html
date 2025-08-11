@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sriram - Backend Developer</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --cyan:#06b6d4;
+      --bg-dark:#0b1220;
+      --panel:#111827;
+      --card:#1f2937;
+      --muted: #cbd5e1;
+    }
+
+    html,body{
+      height:100%;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: #0f1724;
+      color: #e6eef6;
+      margin:0;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Navbar */
+    .site-nav {
+      background-color: #0f1724;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      position: sticky;
+      top:0;
+      z-index:999;
+    }
+    .nav-brand { color: var(--cyan); font-weight:700; letter-spacing:0.5px; }
+    .nav-link { color: #9aa7b3; }
+    .nav-link:hover { color: var(--cyan); }
+
+    /* Hero */
+    .hero {
+      padding-top: 6.5rem;
+      padding-bottom: 5rem;
+      text-align:center;
+      background: linear-gradient(135deg,#1f2937 0%, #374151 100%);
+      position: relative;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 60%);
+      pointer-events:none;
+      opacity:0.6;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight:700;
+      margin-bottom: .5rem;
+    }
+    .hero p {
+      font-size:1.15rem;
+      color:#cbd5e1;
+      max-width:900px;
+      margin:0 auto;
+    }
+
+    /* typing caret */
+    .typing-text {
+      display:inline-block;
+      white-space:nowrap;
+      overflow:hidden;
+      border-right: 0.15em solid var(--cyan);
+      animation: typing 3s steps(48,end), blink-caret .75s step-end infinite;
+      max-width: 100%;
+    }
+    @keyframes typing { from { width:0 } to { width:100% } }
+    @keyframes blink-caret { 50% { border-color: transparent } }
+
+    /* sections */
+    section { padding: 4.5rem 0; }
+    .section-title {
+      color: var(--cyan);
+      font-size:1.6rem;
+      margin-bottom:1.5rem;
+      text-align:center;
+      font-weight:700;
+    }
+
+    /* About */
+    .profile-img {
+      width: 180px;
+      height: 180px;
+      object-fit:cover;
+      border-radius: 50%;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      border: 6px solid rgba(255,255,255,0.02);
+    }
+    .about-text {
+      color:#cbd5e1;
+      max-width:760px;
+      margin: 1rem auto 0;
+      font-size: 0.95rem;
+      line-height:1.8;
+    }
+
+    /* cards */
+    .skill-card, .proj-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.03);
+      padding:1.25rem;
+      border-radius: .6rem;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .skill-card:hover, .proj-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    }
+    .tech-text { color:#9ae6ff; font-weight:600; font-size:.95rem; }
+
+    /* contact links */
+    .contact-links a { color: var(--cyan); margin:0 .5rem; }
+
+    /* footer */
+    footer { background:#0b1220; color:#9aa7b3; padding:1rem 0; text-align:center; border-top: 1px solid rgba(255,255,255,0.02); }
+
+    /* slide-in animation */
+    .section-slide-in { opacity: 0; transform: translateY(24px); transition: opacity .55s ease, transform .55s ease; }
+    .section-slide-in.visible { opacity:1; transform: translateY(0); }
+
+    /* responsive tweaks */
+    @media (min-width:992px){
+      .hero h1 { font-size:3.6rem; }
+      .hero p { font-size:1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="container d-flex align-items-center justify-content-between py-3">
+      <div class="d-flex align-items-center gap-3">
+        <a class="nav-brand text-decoration-none" href="#">Ajet Ganapathy A</a>
+      </div>
+
+      <ul class="nav d-none d-md-flex">
+        <li class="nav-item"><a class="nav-link px-3" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- mobile toggler -->
+      <button class="btn btn-sm btn-outline-light d-md-none" id="mobileMenuBtn">Menu</button>
+    </div>
+
+    <!-- mobile menu (toggle) -->
+    <div id="mobileMenu" class="d-md-none" style="display:none; background:#07101a;">
+      <div class="container py-3">
+        <a class="d-block nav-link py-2" href="#home">Home</a>
+        <a class="d-block nav-link py-2" href="#about">About</a>
+        <a class="d-block nav-link py-2" href="#skills">Skills</a>
+        <a class="d-block nav-link py-2" href="#projects">Projects</a>
+        <a class="d-block nav-link py-2" href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="container section-slide-in">
+      <h1>Ajet Ganapathy A</h1>
+      <p class="typing-text">Manual and Automation QA Engineer</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="">
+    <div class="container section-slide-in text-center">
+      <h2 class="section-title">About Me</h2>
+
+      <div class="mx-auto d-flex flex-column align-items-center">
+        <img src="profile-pic.png" alt="Ajetganapathy Profile" class="profile-img mb-4">
+        <p class="about-text text-center">
+             A passionate Quality Assurance Engineer with hands-on experience in manual and automation testing across multiple platforms and browsers. I specialize in ensuring software quality through test planning, execution, and reporting using tools like Selenium, Pytest, Allure, SonarQube, and CI/CD pipelines with Jenkins.
+
+            With a strong foundation in Python, JavaScript, HTML, CSS, and React basics, I enjoy solving problems, breaking things and making products more reliable and user-friendly. I have also contributed to cross-browser compatibility testing, bug reporting, and have a keen eye for UI/UX glitches — yes, even the tiny ones big platforms miss!
+            
+            Beyond work, Iam curious, adaptable, and always learning — from improving test frameworks to exploring new tools.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="">
+    <div class="container section-slide-in">
+      <h2 class="section-title">Technical Skills</h2>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="skill-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Manual Testing</h5>
+            <p class="mb-1">Proficient in creating and executing detailed test cases, test scenarios, and bug reports.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="skill-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Automation Testing</h5>
+            <p class="mb-1  ">Experience in building test scripts using Selenium with <b>Python</b> and <b>Pytest frameworks.</b></p>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="skill-card">
+            <h5 class="mb-2" style="color:var(--cyan)">CI/CD & DevOps Tools</h5>
+            <p class="mb-1  ">Hands-on experience in setting up test automation pipelines using Jenkins.</p>
+            <p class="mb-1  ">Integrated automated tests with Allure Reports and SonarQube quality gates.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="skill-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Programming</h5>
+            <p class="mb-1  ">Proficient in <b>Python, JavaScript</b> and core web technologies (HTML, CSS, React basics).</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="skill-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Defect Management</h5>
+            <p class="mb-1  ">Experienced in reporting and tracking defects with tools like Jira and GitHub Issues.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="skill-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Security & Quality Analysis Tools</h5>
+            <p class="mb-1  ">Familiar with vulnerability scanning using Trivy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="">
+    <div class="container section-slide-in">
+      <h2 class="section-title"> Projects</h2>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-12 col-md-6">
+          <div class="proj-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Automation Sauce Demo</h5>
+            <p class="mb-2">Implemented a Python-based automation suite leveraging Selenium WebDriver and PyTest to validate the login functionality of the Sauce Demo site (Swag Labs)</p>
+            <p class="tech-text mb-2">Tech: Python, Selenium, Jenkins, Sonarqube, Trivy,Ubuntu-Server.</p>
+            <a href="https://github.com/Ajith177/Automation-Sauce-Demo" target="_blank" class="text-decoration-none" style="color:var(--cyan)">View on GitHub</a>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="proj-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Omlette-Recipe-page</h5>
+            <p class="mb-2">Implemented a static, Frontend Mentor challenge solution showcasing a clean HTML/CSS implementation of a recipe page—leveraging semantic markup with assets, a style guide, and a design folder for structure. </p>
+            <p class="tech-text mb-2">Tech: HTML,CSS,JavaScript</p>
+            <a href="https://github.com/Ajith177/Simple-Omlette-Recipe" target="_blank" class="text-decoration-none" style="color:var(--cyan)">View on GitHub</a>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="proj-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Weather App</h5>
+            <p class="mb-2">JavaScript-based app for real-time weather updates using external APIs.</p>
+            <p class="tech-text mb-2">Tech: JavaScript, APIs</p>
+            <a href="https://github.com/sriram0601/WeatherApp" target="_blank" class="text-decoration-none" style="color:var(--cyan)">View on GitHub</a>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="proj-card">
+            <h5 class="mb-2" style="color:var(--cyan)">Movie Review Website</h5>
+            <p class="mb-2">Ruby on Rails application for users to post and view movie reviews.</p>
+            <p class="tech-text mb-2">Tech: Ruby on Rails, MySQL, Bootstrap</p>
+            <a href="https://github.com/sriram0601/review-time" target="_blank" class="text-decoration-none" style="color:var(--cyan)">View on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="">
+    <div class="container section-slide-in text-center">
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="mb-4" style="max-width:820px; margin:0 auto;">
+        Aspiring to join a product-based company or MNC as a Quality Assurance Engineer, leveraging expertise in manual and automation testing to deliver high-quality software.
+      </p>
+
+      <div class="contact-links d-flex justify-content-center align-items-center gap-3 flex-wrap">
+        <a href="mailto:hiajetganapathy@gmail.com" class="text-decoration-none">Gmail</a>
+        <a href="https://www.linkedin.com/in/ajet-ganapathy-a-72aa36266/" target="_blank" class="text-decoration-none">LinkedIn</a>
+        <a href="https://github.com/Ajith177" target="_blank" class="text-decoration-none">GitHub</a>
+        <a href="https://www.codewars.com/users/Ajithganapathy" target="_blank"class="text-decoration-none">Codewars</a>
+        <a href="https://medium.com/@ajithganapathy2001" target="_blank" class="text-decoration-none">Medium</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p class="mb-0">&copy; 2025 Ajetganapathy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // mobile menu toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileBtn && mobileBtn.addEventListener('click', () => {
+      mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e){
+        // close mobile menu when link clicked
+        if(window.innerWidth < 768){
+          mobileMenu.style.display = 'none';
+        }
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+      });
+    });
+
+    // Intersection Observer for slide-in effect
+    const sections = document.querySelectorAll('.section-slide-in');
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    sections.forEach(s=>observer.observe(s));
+  </script>
+</body>
+</html>
